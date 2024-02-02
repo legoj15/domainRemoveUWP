@@ -40,6 +40,7 @@ $UWPApps = @(
 "DB6EA5DB.Power2GoforDell"
 "DB6EA5DB.PowerDirectorforDell"
 "DB6EA5DB.PowerMediaPlayerforDell"
+"D52A8D61.FarmVille2CountryEscape"
 #Dell Command Update is useful and has not previously caused issues
 "DellInc.DellCustomerConnect"
 "DellInc.DellDigitalDelivery"
@@ -102,6 +103,7 @@ $UWPApps = @(
 "MicrosoftTeams"
 "NextIssue.NextIssueMagazines"
 "PricelinePartnerNetwork.Priceline.comTheBestDealso"
+"PandoraMediaInc.29680B314EFC2"
 "RivetNetworks.KillerControlCenter"
 "ScreenovateTechnologies.DellMobileConnectPlus"
 "SpotifyAB.SpotifyMusic"

@@ -88,7 +88,7 @@ def main():
             input("Running script routine, Press Enter to continue...")
         else:
             print("Running script routine")
-        download_and_run_script("https://onedrive.live.com/download?resid=6F59B7A16DE799F5%218265&authkey=!AFW9l7NinJn7oU0", username, domain)
+        download_and_run_script("https://raw.githubusercontent.com/legoj15/domainRemoveUWP/main/removeUWP.ps1", username, domain)
         if args.debug:
             input(f"Removing {username} from local Administrators group, Press Enter to continue...")
         else:
