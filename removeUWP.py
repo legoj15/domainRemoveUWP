@@ -13,7 +13,6 @@ parser = argparse.ArgumentParser(description="Downloads and runs a PowerShell sc
 # Add the arguments
 parser.add_argument('--debug', action='store_true', help='Enable debug mode')
 parser.add_argument('--first_run', type=str, help='Signifies the first automatic re-run of the script. Used autonomously')
-parser.add_argument('--second_run', type=str, help='Signifies the second automatic re-run of the script. Used autonomously')
 
 # Parse the arguments
 args, unknown = parser.parse_known_args()
@@ -34,14 +33,14 @@ def is_admin():
     except:
         return False
 
-def add_to_admin_group(username):
+def add_to_admin_group(username, domain):
     try:
-        subprocess.run(['net', 'localgroup', 'Administrators', username, '/add'])
+        subprocess.run(['net', 'localgroup', 'Administrators', f"{domain}\\{username}", '/add'])
     except subprocess.CalledProcessError:
         print(f"User {username} is already in the Administrators group.")
 
-def remove_from_admin_group(username):
-    subprocess.run(['net', 'localgroup', 'Administrators', username, '/delete'])
+def remove_from_admin_group(username, domain):
+    subprocess.run(['net', 'localgroup', 'Administrators', f"{domain}\\{username}", '/delete'])
 
 def download_and_run_script(url, username, domain):
     password = getpass.getpass(f"Enter the password for {username}: ")
@@ -69,9 +68,6 @@ def main():
     if args.first_run:
         username = args.first_run
         print(f"Passed username: {username}")
-    elif args.second_run:
-        username = args.second_run
-        print(f"Passed username: {username}")
     else:
         username = getpass.getuser()
         print(f"Current username: {username}")
@@ -80,10 +76,20 @@ def main():
     domain = socket.getfqdn().split('.', 1)[-1]
     print(f"Current domain: {domain}")
 
-    if args.second_run:
+    if is_admin() and args.first_run is not None:
         if args.debug:
-            input("Second re-run, download and run script. Press Enter to continue...")
-        print(f"Current username: {username}")
+            input("Elevated restart, elevating current user step, Press Enter to continue...")
+        else:
+            print("Elevated restart, elevating current user step.")
+        if args.debug:
+            input(f"Adding {username} to local Administrators group, Press Enter to continue...")
+        else:
+            print(f"Adding {username} to local Administrators group")
+        add_to_admin_group(username, domain)
+        if args.debug:
+            input(f"Added {username} to local Administrators group, Press Enter to continue...")
+        else:
+            print(f"Added {username} to local Administrators group")
         if args.debug:
             input("Running script routine, Press Enter to continue...")
         else:
@@ -93,38 +99,14 @@ def main():
             input(f"Removing {username} from local Administrators group, Press Enter to continue...")
         else:
             print(f"Removing {username} from local Administrators group")
-        remove_from_admin_group(username)
+        remove_from_admin_group(username, domain)
         if args.debug:
             input(f"Removed {username} from local Administrators group, Press Enter to continue...")
         else:
             print(f"Removed {username} from local Administrators group")
-    elif is_admin() and args.first_run is not None:
-        if args.debug:
-            input("First re-run, elevating current user step, Press Enter to continue...")
-        else:
-            print("First re-run, elevating current user step.")
-        if args.debug:
-            input(f"Adding {username} to local Administrators group, Press Enter to continue...")
-        else:
-            print(f"Adding {username} to local Administrators group")
-        add_to_admin_group(username)
-        if args.debug:
-            input(f"Added {username} to local Administrators group, Press Enter to continue...")
-        else:
-            print(f"Added {username} to local Administrators group")
-        # Restart the script without elevation
-        try:
-            if args.debug:
-                input("Press Enter to proceed to the second re-run of the script...")
-                ctypes.windll.shell32.ShellExecuteW(None, 'runas', sys.executable, ' '.join([sys.argv[0], '--debug', '--second_run', f'"{username}"']), None, 1)
-            else:
-                ctypes.windll.shell32.ShellExecuteW(None, 'runas', sys.executable, ' '.join([sys.argv[0], '--second_run', f'"{username}"']), None, 1)
-        finally:
-            # Ensure to reset stdout to its original value
-            sys.stdout = original_stdout
     elif is_admin():
         print("Downloading script")
-        response = requests.get("https://onedrive.live.com/download?resid=6F59B7A16DE799F5%218265&authkey=!AFW9l7NinJn7oU0")
+        response = requests.get("https://raw.githubusercontent.com/legoj15/domainRemoveUWP/main/removeUWP.ps1")
         with open('script.ps1', 'w') as file:
             file.write(response.text)
         if args.debug:
