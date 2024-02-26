@@ -42,6 +42,7 @@ $UWPApps = @(
 "DB6EA5DB.PowerMediaPlayerforDell"
 "D52A8D61.FarmVille2CountryEscape"
 #Dell Command Update is useful and has not previously caused issues
+"DellInc.DellSupportAssistforPCs"
 "DellInc.DellCustomerConnect"
 "DellInc.DellDigitalDelivery"
 "DellInc.DellOptimizer"
