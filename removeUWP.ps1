@@ -120,6 +120,10 @@ $UWPApps = @(
 "king.com.FarmHeroesSaga"
 "microsoft.windowscommunicationsapps"
 "sMedioforToshiba.TOSHIBAMediaPlayerbysMedioTrueLin"
+"DropboxInc.Dropbox"
+"WinZip"
+"Plex"
+"89006A2E.AutodeskSketchBook"
 )
 foreach ($UWPApp in $UWPApps) {
 Get-AppxPackage -Name $UWPApp -AllUsers | Remove-AppxPackage
