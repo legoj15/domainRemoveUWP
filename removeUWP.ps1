@@ -43,7 +43,6 @@ $UWPApps = @(
 "DB6EA5DB.Power2GoforDell"
 "DB6EA5DB.PowerDirectorforDell"
 "DB6EA5DB.PowerMediaPlayerforDell"
-#Dell Command Update is useful and has not previously caused issues
 "DellInc.DellCustomerConnect"
 "DellInc.DellDigitalDelivery"
 "DellInc.DellOptimizer"
@@ -87,6 +86,7 @@ $UWPApps = @(
 "Microsoft.Office.Sway"
 "Microsoft.OneConnect"
 "Microsoft.OneDriveSync"
+"Microsoft.OutlookForWindows"
 "Microsoft.People"
 "Microsoft.PowerAutomateDesktop"
 "Microsoft.Print3D"
@@ -95,8 +95,10 @@ $UWPApps = @(
 "Microsoft.SkypeApp"
 "Microsoft.SkypeWiFi"
 "Microsoft.Todos"
+"Microsoft.Todos"
 "Microsoft.Wallet"
 "Microsoft.Whiteboard"
+"Microsoft.Windows.Ai.Copilot.Provider"
 "Microsoft.Windows.DevHome"
 "microsoft.windowscommunicationsapps"
 "Microsoft.WindowsFeedbackHub"
@@ -111,6 +113,8 @@ $UWPApps = @(
 "Microsoft.ZuneMusic"
 "Microsoft.ZuneVideo"
 "MicrosoftTeams"
+"MicrosoftTeams"
+"MicrosoftWindows.CrossDevice"
 "MSWP.DellTypeCStatus"
 "NextIssue.NextIssueMagazines"
 "PandoraMediaInc.29680B314EFC2"
@@ -124,6 +128,7 @@ $UWPApps = @(
 "WildTangentGames.63435CFB65F55"
 "WinZipComputing.WinZipUniversal"
 "ZapposIPInc.Zappos.com"
+#Dell Command Update is useful and has not previously caused issues
 )
 foreach ($UWPApp in $UWPApps) {
 Get-AppxPackage -Name $UWPApp -AllUsers | Remove-AppxPackage
