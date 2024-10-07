@@ -116,7 +116,6 @@ $UWPApps = @(
 "Microsoft.ZuneVideo"
 "MicrosoftCorporationII.MicrosoftFamily"
 "MicrosoftTeams"
-"MicrosoftTeams"
 "MicrosoftWindows.CrossDevice"
 "MirametrixInc.GlancebyMirametrix"
 "MSWP.DellTypeCStatus"
