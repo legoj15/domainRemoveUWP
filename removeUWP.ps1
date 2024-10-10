@@ -71,6 +71,7 @@ $UWPApps = @(
 "Microsoft.BingSports"
 "Microsoft.BingTravel"
 "Microsoft.BingWeather"
+"Microsoft.Copilot"
 "Microsoft.GamingApp"
 "Microsoft.GetHelp"
 "Microsoft.Getstarted"
