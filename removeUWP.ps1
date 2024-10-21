@@ -119,6 +119,7 @@ $UWPApps = @(
 "MicrosoftTeams"
 "MicrosoftWindows.CrossDevice"
 "MirametrixInc.GlancebyMirametrix"
+"MSTeams"
 "MSWP.DellTypeCStatus"
 "NextIssue.NextIssueMagazines"
 "PandoraMediaInc.29680B314EFC2"
