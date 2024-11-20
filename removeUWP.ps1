@@ -15,8 +15,8 @@ whoami
 
 fsutil behavior set disable8dot3 1
 
+Enable-LocalUser -Name "Administrator"
 Rename-LocalUser -Name "Administrator" -NewName "admin"
-Enable-LocalUser -Name "admin"
 
 $UWPApps = @(
 "26720RandomSaladGamesLLC.SimpleSolitaire"
