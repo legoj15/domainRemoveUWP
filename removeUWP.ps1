@@ -64,6 +64,7 @@ $UWPApps = @(
 "king.com.FarmHeroesSaga"
 "McAfeeInc.04.McAfeeSecurityAdvisorforToshiba"
 "Microsoft.3DBuilder"
+"Microsoft.549981C3F5F10"
 "Microsoft.BingFinance"
 "Microsoft.BingFoodAndDrink"
 "Microsoft.BingHealthAndFitness"
