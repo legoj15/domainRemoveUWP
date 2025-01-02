@@ -142,6 +142,7 @@ Get-AppXProvisionedPackage -Online | Where-Object DisplayName -eq $UWPApp | Remo
 }
 
 start-process "$env:windir\SysWOW64\OneDriveSetup.exe" "/uninstall"
+winget uninstall microsoft.onedrive
 
 Disable-WindowsOptionalFeature -Online -FeatureName Printing-XPSServices-Features
 Get-WindowsCapability -Online | Where-Object {$_.Name -like '*Print.Fax.Scan*'} | Remove-WindowsCapability -Online
