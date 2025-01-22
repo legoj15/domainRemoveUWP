@@ -138,6 +138,11 @@ $UWPApps = @(
 "ZapposIPInc.Zappos.com"
 #Dell Command Update is useful and has not previously caused issues
 )
+
+if ($azure) {
+    $UWPApps = $UWPApps | Where-Object { $_ -ne "Microsoft.OneDriveSync" }
+}
+
 foreach ($UWPApp in $UWPApps) {
 Get-AppxPackage -Name $UWPApp -AllUsers | Remove-AppxPackage
 Get-AppXProvisionedPackage -Online | Where-Object DisplayName -eq $UWPApp | Remove-AppxProvisionedPackage -Online
