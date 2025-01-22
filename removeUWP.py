@@ -13,6 +13,7 @@ parser = argparse.ArgumentParser(description="Downloads and runs a PowerShell sc
 # Add the arguments
 parser.add_argument('--debug', action='store_true', help='Enable debug mode')
 parser.add_argument('--first_run', type=str, help='Signifies the first automatic re-run of the script. Used autonomously')
+parser.add_argument('--azure', action='store_true', help='Specify if computer is Entra joined (will not uninstall OneDrive)')
 
 # Parse the arguments
 args, unknown = parser.parse_known_args()
@@ -117,6 +118,8 @@ def main():
         try:
             if args.debug:
                 subprocess.run(["powershell", "-ExecutionPolicy", "Unrestricted", "./script.ps1", "--debug"], shell=True)
+            elif args.azure:
+                subprocess.run(["powershell", "-ExecutionPolicy", "Unrestricted", "./script.ps1", "--azure"], shell=True)
             else:
                 subprocess.run(["powershell", "-ExecutionPolicy", "Unrestricted", "./script.ps1"], shell=True)
         except subprocess.CalledProcessError as error:

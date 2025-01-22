@@ -7,6 +7,11 @@ if ($args -contains "--debug") {
     $debug = $true
 }
 
+# Check if --azure is in the arguments
+if ($args -contains "--azure") {
+    $azure = $true
+}
+
 if ($debug) {
     Write-Host "Debug mode is ON"
 }
@@ -138,8 +143,12 @@ Get-AppxPackage -Name $UWPApp -AllUsers | Remove-AppxPackage
 Get-AppXProvisionedPackage -Online | Where-Object DisplayName -eq $UWPApp | Remove-AppxProvisionedPackage -Online
 }
 
-start-process "$env:windir\SysWOW64\OneDriveSetup.exe" "/uninstall"
-winget uninstall microsoft.onedrive
+if ($azure) {
+	Write-Host "Skipping OneDrive uninstallation because --azure was specified, assuming Entra joined computer"
+} else {
+	start-process "$env:windir\SysWOW64\OneDriveSetup.exe" "/uninstall"
+	winget uninstall microsoft.onedrive
+}
 
 Disable-WindowsOptionalFeature -Online -FeatureName Printing-XPSServices-Features
 Get-WindowsCapability -Online | Where-Object {$_.Name -like '*Print.Fax.Scan*'} | Remove-WindowsCapability -Online
