@@ -1,4 +1,7 @@
-if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`" `"$args`"" -Verb RunAs; exit }
+if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole] "Administrator")) { 
+    Start-Process powershell.exe "-NoProfile -ExecutionPolicy Bypass -File `"$PSCommandPath`" `"$args`"" -Verb RunAs; 
+    exit 
+}
 
 $debug = $false
 
@@ -151,19 +154,25 @@ $UWPApps = @(
 )
 
 if ($azure) {
-    $UWPApps = $UWPApps | Where-Object { $_ -ne "Microsoft.OneDriveSync" }
+    $UWPApps = $UWPApps | Where-Object { 
+        $_ -ne "Microsoft.OneDriveSync" -and 
+        $_ -ne "MicrosoftTeams" -and 
+        $_ -ne "Microsoft.MicrosoftOfficeHub" -and 
+        $_ -ne "MSTeams" 
+    }
 }
 
 foreach ($UWPApp in $UWPApps) {
-Get-AppxPackage -Name $UWPApp -AllUsers | Remove-AppxPackage
-Get-AppXProvisionedPackage -Online | Where-Object DisplayName -eq $UWPApp | Remove-AppxProvisionedPackage -Online
+    Get-AppxPackage -Name $UWPApp -AllUsers | Remove-AppxPackage
+    Get-AppXProvisionedPackage -Online | Where-Object DisplayName -eq $UWPApp | Remove-AppxProvisionedPackage -Online
 }
 
 if ($azure) {
-	Write-Host "Skipping OneDrive uninstallation because --azure was specified, assuming Entra joined computer"
+    Write-Host "Skipping OneDrive, MicrosoftTeams, and MSTeams uninstallation because --azure was specified, assuming Entra joined computer"
 } else {
-	start-process "$env:windir\SysWOW64\OneDriveSetup.exe" "/uninstall"
-	winget uninstall microsoft.onedrive
+    start-process "$env:windir\SysWOW64\OneDriveSetup.exe" "/uninstall"
+    winget uninstall microsoft.onedrive --scope machine --accept-source-agreements
+    winget uninstall microsoft.onedrive --scope user --accept-source-agreements
 }
 
 Disable-WindowsOptionalFeature -Online -FeatureName Printing-XPSServices-Features
